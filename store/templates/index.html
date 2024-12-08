@@ -1,0 +1,113 @@
+
+
+{%extends 'base.html'%}
+
+{%block main_block%}
+<section>
+    <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+      <header class="text-center">
+        <h2 class="text-2xl font-extrabold text-gray-900 sm:text-4xl">Explore Our Product Collection</h2>
+  
+        <p class="mt-4 text-gray-500">
+          Discover a wide range of products tailored to your needs. Find quality and value in every selection.
+        </p>
+      </header>
+  
+      <div class="mt-8 flex items-center justify-between">
+        <div class="flex rounded border border-gray-200 shadow-sm">
+          <button
+            class="inline-flex h-10 w-10 items-center justify-center border-r bg-gray-100 text-gray-600 transition hover:bg-gray-200 hover:text-gray-700">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-5 h-5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"
+              />
+            </svg>
+          </button>
+  
+          <button
+            class="inline-flex h-10 w-10 items-center justify-center bg-gray-100 text-gray-600 transition hover:bg-gray-200 hover:text-gray-700"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-5 h-5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5"
+              />
+            </svg>
+          </button>
+        </div>
+  
+        <div>
+          <label for="SortBy" class="sr-only">Sort By</label>
+  
+          <select id="SortBy" class="h-10 rounded-lg border-gray-300 text-sm shadow-sm">
+            <option>Sort By</option>
+            <option value="Title, DESC">Title, DESC</option>
+            <option value="Title, ASC">Title, ASC</option>
+            <option value="Price, DESC">Price, DESC</option>
+            <option value="Price, ASC">Price, ASC</option>
+          </select>
+        </div>
+      </div>
+  
+      <ul class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+       {%for p in page_obj%}
+
+       <li>
+        <a href="{%url 'product-detail' p.id%}" class="group block overflow-hidden rounded-lg shadow hover:shadow-lg">
+         {%if p.picture%}
+         <img
+         src="{{p.picture.url}}"
+         alt="{{p.title}}"
+         class="h-[300px] w-full object-cover transition duration-500 group-hover:scale-105"
+       />
+         {%else%}
+         <img
+         src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
+         alt="Placeholder image"
+         class="h-[300px] w-full object-cover transition duration-500 group-hover:scale-105"
+       />
+         {%endif%}
+
+          <div class="relative bg-white p-4">
+            <h3 class="text-sm font-semibold text-gray-700 group-hover:underline group-hover:underline-offset-4">
+              {{p.title}}
+            </h3>
+
+            <p class="mt-2 text-lg font-bold text-gray-900">{{p.price}}/-</p>
+          </div>
+        </a>
+      </li>
+
+       {%endfor%}
+
+      </ul>
+    </div>
+
+    <div class="mt-8 flex justify-center space-x-4">
+      {%if page_obj.has_previous%}
+        <a href="?page={{page_obj.previous_page_number}}" class="inline-block rounded bg-gray-100 px-4 py-2 text-gray-700 hover:bg-gray-200">Previous</a>
+      {%endif%}
+  
+      {%if page_obj.has_next%}
+        <a href="?page={{page_obj.next_page_number}}" class="inline-block rounded bg-gray-100 px-4 py-2 text-gray-700 hover:bg-gray-200">Next</a>
+      {%endif%}
+    </div>
+</section>
+{%endblock%}
